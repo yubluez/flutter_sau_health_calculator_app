@@ -71,7 +71,7 @@ class _BmiUiState extends State<BmiUi> {
                   controller: weightCtrl,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    hintText: 'กรอกน้ำหนักของคุณ',
+                    hintText: 'กรุณากรอกน้ำหนักของคุณ',
                     fillColor: const Color(0xFFF5F5F5),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
