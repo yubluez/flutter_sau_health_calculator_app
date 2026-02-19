@@ -51,8 +51,8 @@ class _BmiUiState extends State<BmiUi> {
                 SizedBox(height: 20.0),
                 Image.asset(
                   "assets/images/bmi.png",
-                  width: 180.0,
-                  height: 180.0,
+                  width: 150.0,
+                  height: 150.0,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 30.0),
@@ -114,7 +114,7 @@ class _BmiUiState extends State<BmiUi> {
                       ),
                     ),
                     child: const Text(
-                      "คำนวณ BMI",
+                      "คำนวณ BMR",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -146,32 +146,38 @@ class _BmiUiState extends State<BmiUi> {
                   ),
                 ),
                 SizedBox(height: 30.0),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(25),
-                  decoration: BoxDecoration(
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(5.0)),
+                    elevation: 3.0,
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "BMI",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            'BMI',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            bmi.toStringAsFixed(2),
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
+                            ),
+                          ),
+                          Text(
+                            'การแปรผล',
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        bmi.toStringAsFixed(2),
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],

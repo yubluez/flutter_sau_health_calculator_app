@@ -118,7 +118,7 @@ class _BmrUiState extends State<BmrUi> {
                             gender = "female";
                           });
                         },
-                        child: const Text("หญิง"),
+                        child: Text("หญิง"),
                       ),
                     ),
                   ],
@@ -237,37 +237,40 @@ class _BmrUiState extends State<BmrUi> {
                   ),
                 ),
                 SizedBox(height: 30.0),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(5.0)),
+                    elevation: 3.0,
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "BMI",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            'BMR',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            bmr.toStringAsFixed(2),
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
+                            ),
+                          ),
+                          Text(
+                            'kcal/day',
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        bmr.toStringAsFixed(2),
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple,
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Text("kcal/day"),
-                      SizedBox(height: 20.0),
-                    ],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
