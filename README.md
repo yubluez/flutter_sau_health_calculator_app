@@ -1,16 +1,13 @@
-# flutter_sau_health_calculator_app
+# Mobile Application with Flutter/Dart
 
-A new Flutter project.
+## แอปพลิเคชันคำนวณ BMR
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<kbd><img width="250" alt="localhost_10009_(iPhone 14 Pro Max)" src="https://github.com/user-attachments/assets/77216985-13ed-40b9-9934-3dcd5e86267e" /><kbd>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<kbd><img width="250" alt="localhost_10009_(iPhone 14 Pro Max) (1)" src="https://github.com/user-attachments/assets/fe5bc2e2-72a8-474a-9e7e-7b560e3a2f93" /><kbd>
+<br/><br>
+<kbd><img width="250" alt="localhost_10009_(iPhone 14 Pro Max) (2)" src="https://github.com/user-attachments/assets/664bec7b-7d31-4442-9267-2593b2fc8689" /><kbd>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<kbd><img width="1290" height="2796" alt="localhost_10009_(iPhone 14 Pro Max) (3)" src="https://github.com/user-attachments/assets/8231ea7f-cdfe-4497-ac53-29096a81f6f3" /><kbd>
+<br/><br>
+<kbd><img width="1290" height="2796" alt="localhost_10009_(iPhone 14 Pro Max) (4)" src="https://github.com/user-attachments/assets/70171beb-1c80-4d8b-b405-160809290dd7" /><kbd>
