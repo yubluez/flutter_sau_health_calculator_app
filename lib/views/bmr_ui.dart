@@ -184,7 +184,7 @@ class _BmrUiState extends State<BmrUi> {
                           content: Text(
                             'กรุณากรอกข้อมูลให้ครบ',
                           ),
-                          backgroundColor: Colors.red,
+                          backgroundColor: Colors.purple,
                           duration: Duration(seconds: 2),
                         ),
                       );
@@ -216,7 +216,7 @@ class _BmrUiState extends State<BmrUi> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrange,
+                    backgroundColor: Colors.purple,
                     fixedSize: Size(
                       MediaQuery.of(context).size.width,
                       50.0,
@@ -274,7 +274,7 @@ class _BmrUiState extends State<BmrUi> {
                             bmrValue.toStringAsFixed(2),
                             style: TextStyle(
                               fontSize: 40.0,
-                              color: Colors.red,
+                              color: Colors.purple,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
