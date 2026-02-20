@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:flutter/material.dart';
 
 class BmiUi extends StatefulWidget {
@@ -8,36 +10,23 @@ class BmiUi extends StatefulWidget {
 }
 
 class _BmiUiState extends State<BmiUi> {
-  final TextEditingController weightCtrl = TextEditingController();
-  final TextEditingController heightCtrl = TextEditingController();
+  //สร้างตัวควบคุม TextField
+  TextEditingController weightCtrl = TextEditingController();
+  TextEditingController heightCtrl = TextEditingController();
 
-  double bmi = 0.0;
-
-  void calculateBMI() {
-    double weight = double.tryParse(weightCtrl.text) ?? 0;
-    double height = double.tryParse(heightCtrl.text) ?? 0;
-
-    if (weight > 0 && height > 0) {
-      setState(() {
-        bmi = weight / ((height / 100) * (height / 100));
-      });
-    }
-  }
-
-  void clearData() {
-    setState(() {
-      weightCtrl.clear();
-      heightCtrl.clear();
-      bmi = 0.0;
-    });
-  }
+  //สร้างตัวแปรสำหรับเก็บค่า BMI และการแปลผล
+  double bmiValue = 0;
+  String bmiResult = 'การแปรผล';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(45.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.0, //ซ้าย-ขวา
+            vertical: 40.0, //บน-ล่าง
+          ),
           child: Center(
             child: Column(
               children: [
@@ -102,78 +91,121 @@ class _BmiUiState extends State<BmiUi> {
                   ),
                 ),
                 SizedBox(height: 30.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: calculateBMI,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                ElevatedButton(
+                  onPressed: () {
+                    //Validate Input
+                    if (weightCtrl.text.length == 0 ||
+                        heightCtrl.text.length == 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('กรุณากรอกข้อมูลให้ครบ'),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+
+                      return;
+                    }
+
+                    //คำนวณ BMI
+                    double weight = double.parse(weightCtrl.text);
+                    double height = double.parse(heightCtrl.text);
+                    double bmi = weight / ((height / 100) * (height / 100));
+                    setState(() {
+                      bmiValue = bmi;
+                    });
+
+                    //แปลผล BMI
+                    setState(() {
+                      if (bmi < 18.5) {
+                        bmiResult = 'ผอมไป';
+                      } else if (bmi <= 24.9) {
+                        bmiResult = 'ปกติ';
+                      } else if (bmi <= 29.9) {
+                        bmiResult = 'เริ่มอ้วน';
+                      } else if (bmi <= 34.9) {
+                        bmiResult = 'โรคอ้วนระดับ 1';
+                      } else {
+                        bmiResult = 'โรคอ้วนระดับ 2';
+                      }
+                    });
+                  },
+                  child: Text(
+                    'คํานวณ BMI',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
                     ),
-                    child: const Text(
-                      "คำนวณ BMR",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepOrange,
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      50.0,
                     ),
                   ),
                 ),
-                SizedBox(height: 15.0),
                 SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: clearData,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade400,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                  height: 10.0,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      weightCtrl.text = '';
+                      heightCtrl.text = '';
+                      bmiValue = 0;
+                      bmiResult = 'การแปรผล';
+                    });
+                  },
+                  child: Text(
+                    'ล้างข้อมูล',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
                     ),
-                    child: const Text(
-                      "ล้างข้อมูล",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey,
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      50.0,
                     ),
                   ),
                 ),
                 SizedBox(height: 30.0),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width,
                   child: Card(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(5.0)),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                     elevation: 3.0,
-                    color: Colors.grey.shade200,
+                    color: Colors.green[100],
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 20.0,
+                      ),
                       child: Column(
                         children: [
                           Text(
                             'BMI',
                             style: TextStyle(
-                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            bmi.toStringAsFixed(2),
+                            bmiValue.toStringAsFixed(2),
                             style: TextStyle(
-                              fontSize: 25.0,
+                              fontSize: 40.0,
+                              color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple,
                             ),
                           ),
                           Text(
-                            'การแปรผล',
+                            bmiResult,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),

@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:flutter/material.dart';
 
 class BmrUi extends StatefulWidget {
@@ -13,40 +15,18 @@ class _BmrUiState extends State<BmrUi> {
   final TextEditingController ageCtrl = TextEditingController();
 
   String gender = "male";
-  double bmr = 0.0;
 
-  void calculateBMR() {
-    double weight = double.tryParse(weightCtrl.text) ?? 0;
-    double height = double.tryParse(heightCtrl.text) ?? 0;
-    double age = double.tryParse(ageCtrl.text) ?? 0;
-
-    if (weight <= 0 || height <= 0 || age <= 0) return;
-
-    setState(() {
-      if (gender == "male") {
-        bmr = 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
-      } else {
-        bmr = 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
-      }
-    });
-  }
-
-  void clearData() {
-    setState(() {
-      weightCtrl.clear();
-      heightCtrl.clear();
-      ageCtrl.clear();
-      bmr = 0.0;
-      gender = "male";
-    });
-  }
+  double bmrValue = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(45.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.0, //ซ้าย-ขวา
+            vertical: 40.0, //บน-ล่าง
+          ),
           child: Center(
             child: Column(
               children: [
@@ -193,84 +173,122 @@ class _BmrUiState extends State<BmrUi> {
                   ),
                 ),
                 SizedBox(height: 30.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: calculateBMR,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Validate input
+                    if (weightCtrl.text.isEmpty ||
+                        heightCtrl.text.isEmpty ||
+                        ageCtrl.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'กรุณากรอกข้อมูลให้ครบ',
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+
+                      return;
+                    }
+
+                    // คำนวณ BMR
+                    double weight = double.parse(weightCtrl.text);
+                    double height = double.parse(heightCtrl.text);
+                    int age = int.parse(ageCtrl.text);
+                    double bmr = 0;
+
+                    if (gender == "ชาย") {
+                      bmr = 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
+                    } else {
+                      bmr = 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
+                    }
+
+                    setState(() {
+                      bmrValue = bmr;
+                    });
+                  },
+                  child: Text(
+                    'คํานวณ BMR',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
                     ),
-                    child: const Text(
-                      "คำนวณ BMI",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepOrange,
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      50.0,
                     ),
                   ),
                 ),
                 SizedBox(height: 15.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: clearData,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade400,
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      weightCtrl.text = "";
+                      heightCtrl.text = "";
+                      ageCtrl.text = "";
+                      bmrValue = 0;
+                      gender = "ชาย";
+                    });
+                  },
+                  child: Text(
+                    'ล้างข้อมูล',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
                     ),
-                    child: const Text(
-                      "ล้างข้อมูล",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey,
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      50.0,
                     ),
                   ),
                 ),
                 SizedBox(height: 30.0),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width,
                   child: Card(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(5.0)),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                     elevation: 3.0,
-                    color: Colors.grey.shade200,
+                    color: Colors.green[100],
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 20.0,
+                      ),
                       child: Column(
                         children: [
                           Text(
                             'BMR',
                             style: TextStyle(
-                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            bmr.toStringAsFixed(2),
+                            bmrValue.toStringAsFixed(2),
                             style: TextStyle(
-                              fontSize: 25.0,
+                              fontSize: 40.0,
+                              color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple,
                             ),
                           ),
                           Text(
                             'kcal/day',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
